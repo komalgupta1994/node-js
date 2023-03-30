@@ -1,16 +1,24 @@
-let http = require('http');
 const express = require('express');
+const bodyParser = require('body-parser');
 // express is middleware and framework for makes life easy 
 const app = express();
 
+app.use(bodyParser.urlencoded({extended: false}));
+
 // use method is call on every incoming request
-app.use((req, res, next) => {
-    console.log('in middleware');
-    next(); // Allows the request to continue to the next middleware in the line, without next it will not go in next use method
+app.use('/add-product', (req, res, next) => {
+    res.send('<form action="/product" method="POST"><input type="text" name="title"/><button type="submit">Add Product</button></form>')
 })
 
-// whenever any request will come this function will execute
-const server = http.createServer(app)
+app.post('/product', (req, res, next) => {
+    console.log(req.body)
+    res.redirect('/');
+})
 
-// after creating the server we have to listen the request
-server.listen(3001);
+app.use('/', (req, res, next) => {
+    console.log('in middleware');
+    res.send('<h1>Hello from express js</h1>')
+    // next(); // Allows the request to continue to the next middleware in the line, without next it will not go in next use method
+})
+
+app.listen(3001);
