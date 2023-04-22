@@ -10,7 +10,13 @@ router.get('/', (req, res, next) => {
     console.log('in middleware', adminData.products);
     const products = adminData.products;
     // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
-    res.render('shop', {products, docTitle: 'Dynamic Shop', path: '/'});
+    res.render('shop', { 
+        products, docTitle: 'Dynamic Shop', 
+        path: '/', 
+        hasProduct: products.length > 0, 
+        shopActive: true, 
+        productCss: true 
+    });
     // next(); // Allows the request to continue to the next middleware in the line, without next it will not go in next use method
 })
 
