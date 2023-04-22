@@ -11,7 +11,8 @@ router.get('/', (req, res, next) => {
     const products = adminData.products;
     // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
     res.render('shop', { 
-        products, docTitle: 'Dynamic Shop', 
+        products, 
+        docTitle: 'Dynamic Shop', 
         path: '/', 
         hasProduct: products.length > 0, 
         shopActive: true, 
