@@ -8,7 +8,9 @@ const adminData = require('./admin');
 
 router.get('/', (req, res, next) => {
     console.log('in middleware', adminData.products);
-    res.sendFile(path.join(rootDir, 'views', 'shop.html'));
+    const products = adminData.products;
+    // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
+    res.render('shop', {products, docTitle: 'Dynamic Shop', path: '/'});
     // next(); // Allows the request to continue to the next middleware in the line, without next it will not go in next use method
 })
 

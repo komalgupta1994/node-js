@@ -7,6 +7,8 @@ const shopRoutes = require('./routes/shop');
 // express is middleware and framework for makes life easy 
 const app = express();
 
+app.set('view engine', 'pug');
+
 app.use(bodyParser.urlencoded({extended: false}));
 
 // this is use for expose the static/public files/folder to outside of world
@@ -18,7 +20,8 @@ app.use(shopRoutes);
 
 app.use('/', (req, res) => {
     // res.send('<h1>Page Not Found</h1>')
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+    // res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+    res.status(404).render('404', {docTitle: 'Dynamic Page Not Found'});
 })
 
 app.listen(3001);
