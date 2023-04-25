@@ -1,14 +1,19 @@
 const express = require('express');
 const path = require('path');
-const productController = require('../controllers/products');
+const adminController = require('../controllers/admin');
 
 const router = express.Router();
 
 
 
 // use method is call on every incoming request
-router.get('/add-product', productController.getAddProducts);
+router.get('/add-product', adminController.getAddProducts);
 
-router.post('/product', productController.postAddProduct)
+router.get('/products', adminController.getProducts);
+
+// router.get('/products', adminController.getProducts);
+
+// Save product
+router.post('/product', adminController.postAddProduct)
 
 module.exports = router;

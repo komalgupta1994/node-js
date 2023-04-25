@@ -2,7 +2,7 @@ const Product = require('../models/product');
 
 exports.getAddProducts = (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
-    res.render('add-product', {
+    res.render('admin/add-product', {
         docTitle: 'Add Product', 
         path: '/admin/add-product', 
         addProductActive: true, 
@@ -12,21 +12,18 @@ exports.getAddProducts = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-    console.log(req.body)
-    // products.push({title: req.body.title})
-    const product = new Product(req.body.title);
+    const body = req.body;
+    const product = new Product(body.title, body.imageUrl, body.desc, body.price);
     product.saveProduct();
     res.redirect('/');
 };
 
 exports.getProducts = (req, res, next) => {
-    const products = Product.fetchAllProduct();
-    res.render('shop', { 
-        products, 
-        docTitle: 'Dynamic Shop', 
-        path: '/', 
-        hasProduct: products.length > 0, 
-        shopActive: true, 
-        productCss: true 
-    });
-};
+    Product.fetchAllProduct((products) => {
+        res.render('admin/products', { 
+            products, 
+            docTitle: 'Admin Products', 
+            path: '/admin/products'
+        });
+    });  
+}
