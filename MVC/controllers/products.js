@@ -1,4 +1,4 @@
-const products = [];
+const Product = require('../models/product');
 
 exports.getAddProducts = (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
@@ -13,13 +13,14 @@ exports.getAddProducts = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
     console.log(req.body)
-    products.push({title: req.body.title})
+    // products.push({title: req.body.title})
+    const product = new Product(req.body.title);
+    product.saveProduct();
     res.redirect('/');
 };
 
 exports.getProducts = (req, res, next) => {
-    console.log('in middleware', products);
-   
+    const products = Product.fetchAllProduct();
     res.render('shop', { 
         products, 
         docTitle: 'Dynamic Shop', 
