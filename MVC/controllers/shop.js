@@ -40,3 +40,14 @@ exports.getCheckout = (req, res, next) => {
         docTitle: 'Checkout'
     })
 }
+
+exports.getProductDetail = (req, res, next) => {
+    const productId = req.params.productId;
+    Product.getProductDetail(productId, (selectedProduct) => {
+        res.render('shop/product-detail', {
+            path: '/products',
+            docTitle: selectedProduct.title,
+            selectedProduct
+        })
+    })
+}
