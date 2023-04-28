@@ -34,4 +34,10 @@ module.exports = class Cart {
             });
         })
     }
+
+    static deleteProduct(id, price) {
+        fs.readFile(p, fileContent => {
+            
+        })
+    }
 }

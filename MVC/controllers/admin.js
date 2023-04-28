@@ -24,16 +24,17 @@ exports.editProducts = (req, res, next) => {
     })
 };
 
-exports.postEditProduct = (req, res, next) => {
-    
-}
-
-exports.postAddProduct = (req, res, next) => {
+exports.postAddEditProduct = (req, res, next) => {
     const body = req.body;
-    const product = new Product(body.title, body.imageUrl, body.desc, body.price);
+    let product;
+    if (body.id) {
+        product = new Product(body.id, body.title, body.imageUrl, body.desc, body.price);
+    } else {
+        product = new Product(null, body.title, body.imageUrl, body.desc, body.price);
+    }
     product.saveProduct();
-    res.redirect('/');
-};
+    res.redirect('/admin/products')
+}
 
 exports.getProducts = (req, res, next) => {
     Product.fetchAllProduct((products) => {
@@ -43,4 +44,11 @@ exports.getProducts = (req, res, next) => {
             path: '/admin/products'
         });
     });  
+}
+
+exports.deleteProduct = (req, res, next) => {
+    console.log('req------');
+    Product.deleteProduct(req.body.productId, () => {
+        res.redirect('/admin/products');
+    })
 }
