@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const Cart = require('./cart');
 const p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json');
 
 const getAllProductHelper = (cb) => {
@@ -47,15 +48,13 @@ module.exports = class Product {
         });
     }
 
-    static deleteProduct(id, callBack) {
+    static deleteProduct(id, price, callBack) {
         getAllProductHelper((products) => {
             const updatedProducts = products.filter(product => product.id !== id);
-            console.log('products before', products);
-            // products.splice(productIndex, 1);
-            console.log('products after', products);
             fs.writeFile(p, JSON.stringify(updatedProducts), err => {
                 if (!err) {
-                    
+                    Cart.deleteProductFromCart(id, price);
+                    callBack();
                 }
             })
         })

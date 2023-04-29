@@ -47,8 +47,8 @@ exports.getProducts = (req, res, next) => {
 }
 
 exports.deleteProduct = (req, res, next) => {
-    console.log('req------');
-    Product.deleteProduct(req.body.productId, () => {
+    console.log('req from ------', req.body);
+    Product.deleteProduct(req.body.productId, req.body.price, () => {
         res.redirect('/admin/products');
     })
 }
