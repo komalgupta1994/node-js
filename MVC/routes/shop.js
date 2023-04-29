@@ -9,10 +9,12 @@ router.get('/', shopController.getIndex);
 
 router.get('/product-list', shopController.getProducts);
 
-router.get('/cart', shopController.getCart)
+router.get('/cart', shopController.getCart);
 
 // Route to get the detail form data, so need to create cart URL with POST method
-router.post('/cart', shopController.postCart)
+router.post('/cart', shopController.postCart);
+
+router.post('/cart-delete-item', shopController.deleteCartItem);
 
 router.get('/checkout', shopController.getCheckout)
 

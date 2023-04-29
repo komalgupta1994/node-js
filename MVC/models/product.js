@@ -48,12 +48,13 @@ module.exports = class Product {
         });
     }
 
-    static deleteProduct(id, price, callBack) {
+    static deleteProduct(id, callBack) {
         getAllProductHelper((products) => {
+            const product = products.find(prod => prod.id === id);
             const updatedProducts = products.filter(product => product.id !== id);
             fs.writeFile(p, JSON.stringify(updatedProducts), err => {
                 if (!err) {
-                    Cart.deleteProductFromCart(id, price);
+                    Cart.deleteProductFromCart(id, product.price);
                     callBack();
                 }
             })
