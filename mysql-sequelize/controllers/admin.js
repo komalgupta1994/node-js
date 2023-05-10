@@ -38,11 +38,11 @@ exports.postAddEditProduct = (req, res, next) => {
         })
         .catch(err => console.log('error from edit product', err));
     } else {
-        Product.create({
+        req.user.createProduct({
             title,
             description,
             imageUrl,
-            price
+            price,
         }).then(result => {
             console.log('created new product', result);
             res.redirect('/admin/products')
@@ -51,7 +51,8 @@ exports.postAddEditProduct = (req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
-    Product.findAll().then(products => {
+    req.user.getProducts()
+    .then(products => {
         res.render('admin/products', {
             products,
             docTitle: 'Admin Products',
