@@ -2,11 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-// const adminRoutes = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 // const shopRoutes = require('./routes/shop');
 
 // const errorController = require('./controllers/404');
-const mongoConnect = require('./utils/database');
+const {mongoConnect} = require('./utils/database');
 // express is middleware and framework for makes life easy 
 const app = express();
 
@@ -18,17 +18,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // this is use for expose the static/public files/folder to outside of world
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use((req, res, next) => {
+// app.use((req, res, next) => {
    
-})
+// })
 
-// app.use('/admin', adminRoutes);
+app.use('/admin', adminRoutes);
 
 // app.use(shopRoutes);
 
 // app.use('/', errorController.errorMessage);
 
-mongoConnect((client) => {
-    console.log('client', client);
-    app.listen(3001);
+mongoConnect(() => {
+    console.log('client');
+    app.listen(3010);
 })
