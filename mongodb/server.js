@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const adminRoutes = require('./routes/admin');
-// const shopRoutes = require('./routes/shop');
+const shopRoutes = require('./routes/shop');
 
 // const errorController = require('./controllers/404');
 const {mongoConnect} = require('./utils/database');
@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/admin', adminRoutes);
 
-// app.use(shopRoutes);
+app.use(shopRoutes);
 
 // app.use('/', errorController.errorMessage);
 

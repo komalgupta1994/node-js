@@ -10,11 +10,11 @@ const router = express.Router();
 router.get('/add-product', adminController.getAddProducts);
 
 // // edit product get for show info when click on edit button
-// router.get('/edit-product/:productId', adminController.editProducts);
+router.get('/edit-product/:productId', adminController.editProducts);
 
-// router.post('/update-product', adminController.postAddEditProduct);
+router.post('/update-product', adminController.postAddEditProduct);
 
-// router.get('/products', adminController.getProducts);
+router.get('/products', adminController.getProducts);
 
 // router.get('/products', adminController.getProducts);
 
