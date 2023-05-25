@@ -21,6 +21,6 @@ router.get('/products', adminController.getProducts);
 // Save product
 router.post('/product', adminController.postAddEditProduct);
 
-// router.post('/delete-product', adminController.deleteProduct);
+router.post('/delete-product', adminController.deleteProduct);
 
 module.exports = router;
