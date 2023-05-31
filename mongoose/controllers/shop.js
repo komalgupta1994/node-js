@@ -13,7 +13,11 @@ exports.getIndex = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
     // Mongoose find method
-    Product.find().then(products => {
+    Product.find()
+    // .select('title price -_id')
+    // .populate('userId')
+    .then(products => {
+        console.log('products---', products);
         res.render('shop/product-list', {
             products,
             docTitle: 'Product List',
@@ -23,7 +27,16 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-    req.user.getCart().then(products => {
+    req.user
+    .populate('cart.items.product')
+    .then(user => {
+        const products = (user.cart.items || []).map(data => {
+            return {
+                title: data.product.title,
+                quantity: data.quantity,
+                _id: data.product._id
+            }
+        })
         res.render('shop/cart', {
             path: '/cart',
             docTitle: 'Cart',
@@ -34,8 +47,8 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
     const productId = req.body.productId;
-    Product.fetchById(productId).then(product => {
-        return req.user.addToCart(product);
+    Product.findById(productId).then(product => {
+        return req.user.addTocart(product);
     }).then(cart => {
         res.redirect('/cart');
     }).catch(err => console.log('error while add to cart', err));
@@ -43,7 +56,7 @@ exports.postCart = (req, res, next) => {
 
 exports.getProductDetail = (req, res, next) => {
     const productId = req.params.productId;
-    Product.fetchById(productId).then((product) => {
+    Product.findById(productId).then((product) => {
         console.log('product', product);
         res.render('shop/product-detail', {
             path: '/products',

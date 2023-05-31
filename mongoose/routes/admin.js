@@ -10,15 +10,15 @@ const router = express.Router();
 router.get('/add-product', adminController.getAddProducts);
 
 // edit product get for show info when click on edit button
-// router.get('/edit-product/:productId', adminController.editProducts);
+router.get('/edit-product/:productId', adminController.editProducts);
 
-router.post('/update-product', adminController.postAddEditProduct);
+router.post('/update-product', adminController.postEditProducts);
 
 router.get('/products', adminController.getProducts);
 
 // Save product
-router.post('/product', adminController.postAddEditProduct);
+router.post('/product', adminController.postAddProduct);
 
-// router.post('/delete-product', adminController.deleteProduct);
+router.post('/delete-product', adminController.deleteProduct);
 
 module.exports = router;
