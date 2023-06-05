@@ -1,5 +1,5 @@
 const Product = require('../models/product');
-// const Cart = require('../models/cart');
+const Order = require('../models/order');
 
 exports.getIndex = (req, res, next) => {
     Product.find().then(products => {
@@ -76,8 +76,25 @@ exports.deleteCartItem = (req, res, next) => {
 }
 
 exports.createOrders = (req, res, next) => {
-    req.user.addOrder()
-    .then(() => res.redirect('/orders'))
+    req.user.populate('cart.items.product')
+        .then(user => {
+            const products = user.cart.items.map(data => {
+                return {
+                    quantity: data.quantity,
+                    product: {...data.product._doc}
+                }
+            })
+            const order = new Order({
+                user: {
+                    name: req.user.name,
+                    userId: req.user
+                },
+                products: products
+            })
+            return order.save();
+        }).then(() => {
+            return req.user.clearCart();
+        }).then(() => res.redirect('/orders'))
     .catch(err => console.log('error from create order', err));
 }
 
