@@ -6,7 +6,8 @@ exports.getIndex = (req, res, next) => {
         res.render('shop/index', {
             products,
             docTitle: 'Shop',
-            path: '/'
+            path: '/',
+            isAutheticated: req.isLoggedIn
         });
     }).catch(err => console.log('err from index page', err));
 };
@@ -21,7 +22,8 @@ exports.getProducts = (req, res, next) => {
         res.render('shop/product-list', {
             products,
             docTitle: 'Product List',
-            path: '/product-list'
+            path: '/product-list',
+            isAutheticated: req.isLoggedIn
         });
     }).catch(err => console.log('err from index page', err));
 };
@@ -41,6 +43,7 @@ exports.getCart = (req, res, next) => {
             path: '/cart',
             docTitle: 'Cart',
             products,
+            isAutheticated: req.isLoggedIn
         })
     }).catch(err => console.log('error from get cart', err));
 }
@@ -61,7 +64,8 @@ exports.getProductDetail = (req, res, next) => {
         res.render('shop/product-detail', {
             path: '/products',
             docTitle: product.title,
-            product
+            product,
+            isAutheticated: req.isLoggedIn
         })
     }).catch(err => console.log('err for product detail', err));
 }
@@ -105,7 +109,8 @@ exports.getOrders = (req, res, next) => {
         res.render('shop/orders', {
             path: '/orders',
             docTitle: 'Orders',
-            orders
+            orders,
+            isAutheticated: req.isLoggedIn
         })
     })
     .catch(err => console.log('error while fetching orders', err));
