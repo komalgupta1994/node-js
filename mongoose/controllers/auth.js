@@ -11,6 +11,7 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
     // res.setHeader('Set-Cookie', 'loggedIn=true');
     req.session.isLoggedIn = true
+    req.session.user = {name: 'komal'}
     res.redirect('/');
 }
 
